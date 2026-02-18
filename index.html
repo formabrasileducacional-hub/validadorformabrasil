@@ -6,18 +6,20 @@
     <title>Validação - Forma Brasil</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --green: #41ab5d; --bg: #f4f7f4; }
-        body { font-family: 'Open Sans', sans-serif; background-color: var(--bg); margin: 0; padding: 20px; color: #333; }
-        .card { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
-        h1 { font-size: 22px; margin-bottom: 25px; color: #222; }
+        :root { --green: #41ab5d; --bg: #f8f9f8; }
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--bg); margin: 0; padding: 15px; color: #333; }
+        .card { max-width: 550px; margin: 30px auto; background: #fff; padding: 35px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; }
+        h1 { font-size: 24px; margin-bottom: 30px; color: #222; font-weight: 600; }
         .group { margin-bottom: 20px; text-align: left; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
-        input { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; text-align: center; }
-        .btn { background: var(--green); color: white; border: none; padding: 15px 30px; font-size: 16px; cursor: pointer; border-radius: 6px; font-weight: 600; width: 100%; margin-top: 10px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #555; }
+        input { width: 100%; box-sizing: border-box; padding: 14px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; text-align: center; outline: none; }
+        input:focus { border-color: var(--green); }
+        .btn { background: var(--green); color: white; border: none; padding: 16px; font-size: 16px; cursor: pointer; border-radius: 6px; font-weight: 600; width: 100%; margin-top: 10px; transition: 0.3s; }
+        .btn:hover { background: #358e4d; }
         #sucesso { display: none; text-align: left; }
-        .doc-box { background: #e9f5e9; padding: 20px; border-radius: 8px; border: 1px solid #c3e6cb; font-size: 14px; line-height: 1.6; }
-        .btn-down { display: block; background: #222; color: white; text-decoration: none; padding: 15px; text-align: center; border-radius: 6px; margin-top: 20px; font-weight: 600; }
-        .footer { font-size: 11px; color: #777; margin-top: 20px; text-align: center; border-top: 1px solid #eee; padding-top: 10px; }
+        .doc-box { background: #e9f5e9; padding: 25px; border-radius: 8px; border: 1px solid #c3e6cb; font-size: 15px; line-height: 1.8; color: #2e502e; }
+        .btn-down { display: block; background: #333; color: white; text-decoration: none; padding: 16px; text-align: center; border-radius: 6px; margin-top: 20px; font-weight: 600; font-size: 16px; }
+        .footer { font-size: 12px; color: #888; margin-top: 25px; text-align: center; border-top: 1px solid #eee; padding-top: 15px; }
     </style>
 </head>
 <body>
@@ -28,55 +30,51 @@
         
         <div class="group">
             <label>Código de Verificação:</label>
-            <input type="text" id="codigo" placeholder="Digite o código aqui">
+            <input type="text" id="codigo" placeholder="Ex: RQ708BGJY2O2550">
         </div>
 
         <div class="group">
-            <label id="pergunta">Pergunta de segurança:</label>
+            <label id="pergunta">Qual a primeira letra de BRASIL?</label>
             <input type="text" id="resposta" placeholder="">
         </div>
 
-        <button class="btn" onclick="conferir()">Validar Documento</button>
+        <button class="btn" onclick="validar()">Validar Documento ➜</button>
     </div>
 
     <div id="sucesso">
-        <h2 style="color: var(--green); text-align: center;">✔ VÁLIDO</h2>
+        <h2 style="color: var(--green); text-align: center; margin-top: 0;">✔ Documento Válido</h2>
         <div class="doc-box">
+            <strong>Código:</strong> <span id="res-codigo"></span><br>
+            <strong>Descrição:</strong> Declaração de conclusão (data de início, matrícula, aulas práticas e Conclusão);<br>
+            <strong>Curso:</strong> Habilitação Profissional Técnica de Nível Médio em Agropecuária.<br>
             <strong>Aluno:</strong> JOÃO VITOR CARVALHO COSTA<br>
             <strong>CPF:</strong> 078.***.***-26<br>
-            <strong>Curso:</strong> Técnico em Agropecuária<br>
-            <strong>Situação:</strong> Concluído<br>
-            <strong>Expedição:</strong> 18/02/2026
+            <strong>Data de expedição:</strong> 18/02/2026
         </div>
         
-        <a href="declaracao.pdf" download class="btn-down">📄 BAIXAR DECLARAÇÃO (PDF)</a>
+        <a href="declaracao.pdf" download="DECLARACAO_JOAO_VITOR.pdf" class="btn-down">📄 GERAR DOCUMENTO (PDF)</a>
         
-        <div class="footer" id="data-hora"></div>
+        <div class="footer" id="info-acesso"></div>
     </div>
 </div>
 
 <script>
-    // Configurações simples e diretas
-    const CODIGO_CERTO = "RQ708BGJY2O2550";
-    
-    // O desafio já é definido aqui para não precisar carregar nada
-    const perguntaAtiva = "Qual a primeira letra de BRASIL?";
-    const respostaAtiva = "B";
+    const CODIGO_MESTRE = "RQ708BGJY2O2550";
+    const RESPOSTA_SEGURANCA = "B";
 
-    document.getElementById('pergunta').innerText = perguntaAtiva;
+    function validar() {
+        const cod = document.getElementById('codigo').value.toUpperCase().trim();
+        const res = document.getElementById('resposta').value.toUpperCase().trim();
 
-    function conferir() {
-        const c = document.getElementById('codigo').value.toUpperCase().trim();
-        const r = document.getElementById('resposta').value.toUpperCase().trim();
-
-        if (c === CODIGO_CERTO && r === respostaAtiva) {
+        if (cod === CODIGO_MESTRE && res === RESPOSTA_SEGURANCA) {
             document.getElementById('busca').style.display = 'none';
             document.getElementById('sucesso').style.display = 'block';
+            document.getElementById('res-codigo').innerText = cod;
             
             const agora = new Date();
-            document.getElementById('data-hora').innerText = "Consultado em: " + agora.toLocaleString('pt-BR') + " | Localização: Carolina-MA";
+            document.getElementById('info-acesso').innerText = "Consultado em: " + agora.toLocaleString('pt-BR') + " | Localização: Carolina-MA";
         } else {
-            alert("Código ou resposta de segurança incorretos!");
+            alert("Código de verificação ou resposta de segurança incorretos!");
         }
     }
 </script>
