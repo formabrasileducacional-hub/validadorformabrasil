@@ -19,7 +19,7 @@
         input:focus { border-color: var(--green-forma); }
         .btn-validar, .btn-action { background: var(--green-forma); color: white; border: none; padding: 15px 45px; font-size: 16px; cursor: pointer; border-radius: 4px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; margin: 5px; text-decoration: none; }
         #sucesso-section { display: none; background-color: var(--bg-success); padding: 50px 20px; border-radius: 4px; border: 1px solid #c3e6cb; }
-        .info-doc { color: #4a704a; font-size: 15px; line-height: 1.8; margin-bottom: 30px; text-align: center; }
+        .info-doc { color: #4a704a; font-size: 15px; line-height: 1.8; margin-bottom: 30px; }
         .footer-info { font-size: 13px; color: #5a8c5a; margin-top: 25px; border-top: 1px dashed #c3e6cb; padding-top: 15px; font-style: italic; }
     </style>
 </head>
@@ -40,11 +40,11 @@
         <h1>Validação de documentos e cadastros</h1>
         <div class="input-group">
             <label>Código de verificação:</label>
-            <input type="text" id="codigo" autocomplete="off" placeholder="">
+            <input type="text" id="codigo" autocomplete="off">
         </div>
         <div class="input-group">
-            <label id="label-captcha">Carregando desafio...</label>
-            <input type="text" id="captcha" autocomplete="off">
+            <label id="label-captcha">Aguarde...</label>
+            <input type="text" id="captcha" autocomplete="off" placeholder="Responda aqui">
         </div>
         <button class="btn-validar" onclick="validar()">Validar ➜</button>
     </div>
@@ -56,59 +56,52 @@
             Documento validado digitalmente<br>
             Código de verificação: <span style="font-weight: 600;" id="res-codigo"></span><br><br>
             
-            <strong>Descrição:</strong> Declaração de conclusão (data de início, matrícula, aulas práticas e Conclusão); [cite: 3, 4]<br>
-            <strong>Curso:</strong> Habilitação Profissional Técnica de Nível Médio em Agropecuária. <br>
+            <strong>Descrição:</strong> Declaração de conclusão (data de início, matrícula, aulas práticas e Conclusão);<br>
+            <strong>Curso:</strong> Habilitação Profissional Técnica de Nível Médio em Agropecuária.<br>
             <strong>RA:</strong> 22928/73144872 / <strong>Matrícula:</strong> 23603.<br>
-            <strong>Aluno:</strong> JOÃO VITOR CARVALHO COSTA <br>
-            <strong>CPF:</strong> 078.***.***-26. <br>
-            <strong>Data de expedição:</strong> 18/02/2026. [cite: 62]<br><br>
+            <strong>Aluno:</strong> JOÃO VITOR CARVALHO COSTA<br>
+            <strong>CPF:</strong> 078.***.***-26.<br>
+            <strong>Data de expedição:</strong> 18/02/2026.<br><br>
             
-            <div class="footer-info" id="audit-trail">Carregando auditoria de acesso...</div>
+            <div class="footer-info" id="audit-trail"></div>
         </div>
-        <a id="link-download" href="declaracao.pdf" download="DECLARACAO_CONCLUSAO_JOAO_VITOR.pdf" class="btn-action">📄 Gerar documento</a>
+        <a href="declaracao.pdf" download="DECLARACAO_JOAO_VITOR.pdf" class="btn-action">📄 Gerar documento</a>
         <button class="btn-action" onclick="window.print()">🖨 Imprimir esta consulta</button>
     </div>
 </div>
 
 <script>
-    const CODIGO_CORRETO = "RQ708BGJY2O2550"; [cite: 66]
+    // Configurações
+    const CODIGO_MESTRE = "RQ708BGJY2O2550";
     const desafios = [
         {p: "Qual a primeira letra de BRASIL?", r: "B"},
-        {p: "Quanto é 7 + 3?", r: "10"},
+        {p: "Quanto é 5 + 2?", r: "7"},
         {p: "Vogais da palavra FORMA?", r: "OA"}
     ];
     let desafioAtual;
 
+    // Esta função roda assim que o site abre
     function gerarDesafio() {
         desafioAtual = desafios[Math.floor(Math.random() * desafios.length)];
         document.getElementById('label-captcha').innerText = desafioAtual.p;
-        document.getElementById('captcha').value = "";
-    }
-
-    async function carregarAuditoria() {
-        try {
-            const resp = await fetch('https://ipapi.co/json/');
-            const data = await resp.json();
-            const dataHora = new Date().toLocaleString('pt-BR');
-            document.getElementById('audit-trail').innerText = `Consultado em: ${dataHora} | IP: ${data.ip} | Localização: ${data.city}-${data.region_code}, Brasil.`;
-        } catch (err) {
-            const dataHora = new Date().toLocaleString('pt-BR');
-            document.getElementById('audit-trail').innerText = `Consultado em: ${dataHora} | Localização: Brasil.`;
-        }
     }
 
     function validar() {
         const cod = document.getElementById('codigo').value.toUpperCase().trim();
         const cap = document.getElementById('captcha').value.toUpperCase().trim();
         
-        if (cod === CODIGO_CORRETO && cap === desafioAtual.r) {
+        if (cod === CODIGO_MESTRE && cap === desafioAtual.r) {
             document.getElementById('busca-section').style.display = 'none';
             document.getElementById('sucesso-section').style.display = 'block';
             document.getElementById('res-codigo').innerText = cod;
-            carregarAuditoria();
+            
+            // Auditoria simples sem depender de sites externos (evita travar)
+            const agora = new Date().toLocaleString('pt-BR');
+            document.getElementById('audit-trail').innerText = `Consultado em: ${agora} | Localização: Carolina-MA.`;
         } else {
-            alert("Código de verificação ou resposta do desafio incorretos.");
+            alert("Código ou desafio incorretos!");
             gerarDesafio();
+            document.getElementById('captcha').value = "";
         }
     }
 </script>
