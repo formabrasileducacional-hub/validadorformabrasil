@@ -21,7 +21,7 @@
         .footer { font-size: 11px; color: #888; margin-top: 25px; text-align: center; border-top: 1px solid #eee; padding-top: 15px; }
     </style>
 </head>
-<body>
+<body onload="sortearDesafio()">
 
 <div class="card">
     <div id="busca">
@@ -33,7 +33,7 @@
         </div>
 
         <div class="group">
-            <label id="pergunta">Qual a primeira letra de BRASIL?</label>
+            <label id="label-pergunta">Carregando pergunta...</label>
             <input type="text" id="resposta" autocomplete="off">
         </div>
 
@@ -45,38 +45,4 @@
         <div class="doc-box">
             <strong>Código:</strong> <span id="res-codigo"></span><br>
             <strong>Descrição:</strong> Declaração de conclusão (data de início, matrícula, aulas práticas e Conclusão);<br>
-            <strong>Curso:</strong> Habilitação Profissional Técnica de Nível Médio em Agropecuária.<br>
-            <strong>Aluno:</strong> JOÃO VITOR CARVALHO COSTA<br>
-            <strong>CPF:</strong> 078.***.***-26<br>
-            <strong>Data de expedição:</strong> 18/02/2026
-        </div>
-        
-        <a href="declaracao.pdf" download="DECLARACAO_JOAO_VITOR.pdf" class="btn-down">📄 GERAR DOCUMENTO (PDF)</a>
-        
-        <div class="footer" id="info-acesso"></div>
-    </div>
-</div>
-
-<script>
-    const CODIGO_MESTRE = "RQ708BGJY2O2550";
-    const RESPOSTA_SEGURANCA = "B";
-
-    function validar() {
-        const cod = document.getElementById('codigo').value.toUpperCase().trim();
-        const res = document.getElementById('resposta').value.toUpperCase().trim();
-
-        if (cod === CODIGO_MESTRE && res === RESPOSTA_SEGURANCA) {
-            document.getElementById('busca').style.display = 'none';
-            document.getElementById('sucesso').style.display = 'block';
-            document.getElementById('res-codigo').innerText = cod;
-            
-            const agora = new Date();
-            document.getElementById('info-acesso').innerText = "Consultado em: " + agora.toLocaleString('pt-BR') + " | Localização: Carolina-MA";
-        } else {
-            alert("Código de verificação ou resposta de segurança incorretos!");
-        }
-    }
-</script>
-
-</body>
-</html>
+            <strong>
