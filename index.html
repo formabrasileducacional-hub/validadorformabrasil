@@ -3,85 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validação de Documentos - Forma Brasil</title>
+    <title>Validação - Forma Brasil</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --green-forma: #41ab5d; --bg-success: #e9f5e9; }
-        body { font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; color: #333; background-color: #f4f7f4; }
-        header { padding: 30px 20px; text-align: center; border-bottom: 1px solid #eee; background: #fff; }
-        .header-info { font-size: 13px; line-height: 1.6; color: #444; margin-top: 10px; }
-        .container { max-width: 600px; margin: 40px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; }
-        h1 { font-weight: 600; font-size: 22px; margin-bottom: 30px; }
-        .input-group { margin-bottom: 20px; text-align: left; }
+        :root { --green: #41ab5d; --bg: #f4f7f4; }
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--bg); margin: 0; padding: 20px; color: #333; }
+        .card { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        h1 { font-size: 22px; margin-bottom: 25px; color: #222; }
+        .group { margin-bottom: 20px; text-align: left; }
         label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
-        input { width: 100%; box-sizing: border-box; padding: 14px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; text-align: center; outline: none; }
-        input:focus { border-color: var(--green-forma); }
-        .btn-validar, .btn-action { background: var(--green-forma); color: white; border: none; padding: 15px; font-size: 16px; cursor: pointer; border-radius: 4px; font-weight: 600; width: 100%; text-decoration: none; display: block; margin-top: 10px; }
-        #sucesso-section { display: none; background-color: var(--bg-success); padding: 25px; border-radius: 4px; border: 1px solid #c3e6cb; text-align: left; }
-        .info-doc { color: #2e502e; font-size: 15px; line-height: 1.8; margin-bottom: 20px; }
-        .footer-info { font-size: 12px; color: #5a8c5a; margin-top: 20px; border-top: 1px dashed #c3e6cb; padding-top: 15px; text-align: center; }
+        input { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; text-align: center; }
+        .btn { background: var(--green); color: white; border: none; padding: 15px 30px; font-size: 16px; cursor: pointer; border-radius: 6px; font-weight: 600; width: 100%; margin-top: 10px; }
+        #sucesso { display: none; text-align: left; }
+        .doc-box { background: #e9f5e9; padding: 20px; border-radius: 8px; border: 1px solid #c3e6cb; font-size: 14px; line-height: 1.6; }
+        .btn-down { display: block; background: #222; color: white; text-decoration: none; padding: 15px; text-align: center; border-radius: 6px; margin-top: 20px; font-weight: 600; }
+        .footer { font-size: 11px; color: #777; margin-top: 20px; text-align: center; border-top: 1px solid #eee; padding-top: 10px; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="header-info">
-        <strong>Forma Brasil Educacional</strong><br>
-        CNPJ: 41.563.154/0001-79<br>
-        Av. Presidente Café Filho, 728, Bessa - João Pessoa-PB<br>
-        atendimento@grupoformaead.com.br
-    </div>
-</header>
-
-<div class="container">
-    <div id="busca-section">
+<div class="card">
+    <div id="busca">
         <h1>Validação de Documentos</h1>
-        <div class="input-group">
-            <label>Código de verificação:</label>
-            <input type="text" id="codigo" autocomplete="off">
+        
+        <div class="group">
+            <label>Código de Verificação:</label>
+            <input type="text" id="codigo" placeholder="Digite o código aqui">
         </div>
-        <div class="input-group">
-            <label id="label-captcha">Qual a primeira letra de BRASIL?</label>
-            <input type="text" id="captcha" autocomplete="off">
+
+        <div class="group">
+            <label id="pergunta">Pergunta de segurança:</label>
+            <input type="text" id="resposta" placeholder="">
         </div>
-        <button class="btn-validar" onclick="validar()">Validar Documento ➜</button>
+
+        <button class="btn" onclick="conferir()">Validar Documento</button>
     </div>
 
-    <div id="sucesso-section">
-        <h2 style="color: #28a745; text-align: center;">✔ Documento válido</h2>
-        <div class="info-doc">
-            <strong>Código:</strong> <span id="res-codigo"></span><br>
-            <strong>Descrição:</strong> Declaração de conclusão (data de início, matrícula, aulas práticas e Conclusão);<br>
-            <strong>Curso:</strong> Habilitação Profissional Técnica de Nível Médio em Agropecuária.<br>
+    <div id="sucesso">
+        <h2 style="color: var(--green); text-align: center;">✔ VÁLIDO</h2>
+        <div class="doc-box">
             <strong>Aluno:</strong> JOÃO VITOR CARVALHO COSTA<br>
             <strong>CPF:</strong> 078.***.***-26<br>
-            <strong>Data de expedição:</strong> 18/02/2026<br>
+            <strong>Curso:</strong> Técnico em Agropecuária<br>
+            <strong>Situação:</strong> Concluído<br>
+            <strong>Expedição:</strong> 18/02/2026
         </div>
-        <a href="declaracao.pdf" download="DECLARACAO_JOAO_VITOR.pdf" class="btn-action">📄 Baixar Declaração (PDF)</a>
-        <button class="btn-action" style="background: #666;" onclick="window.print()">🖨 Imprimir Consulta</button>
-        <div class="footer-info" id="audit-trail"></div>
+        
+        <a href="declaracao.pdf" download class="btn-down">📄 BAIXAR DECLARAÇÃO (PDF)</a>
+        
+        <div class="footer" id="data-hora"></div>
     </div>
 </div>
 
 <script>
-    const CODIGO_CORRETO = "RQ708BGJY2O2550";
-    const RESPOSTA_CAPTCHA = "B";
+    // Configurações simples e diretas
+    const CODIGO_CERTO = "RQ708BGJY2O2550";
+    
+    // O desafio já é definido aqui para não precisar carregar nada
+    const perguntaAtiva = "Qual a primeira letra de BRASIL?";
+    const respostaAtiva = "B";
 
-    function validar() {
-        const cod = document.getElementById('codigo').value.toUpperCase().trim();
-        const cap = document.getElementById('captcha').value.toUpperCase().trim();
-        
-        if (cod === CODIGO_CORRETO && cap === RESPOSTA_CAPTCHA) {
-            document.getElementById('busca-section').style.display = 'none';
-            document.getElementById('sucesso-section').style.display = 'block';
-            document.getElementById('res-codigo').innerText = cod;
+    document.getElementById('pergunta').innerText = perguntaAtiva;
+
+    function conferir() {
+        const c = document.getElementById('codigo').value.toUpperCase().trim();
+        const r = document.getElementById('resposta').value.toUpperCase().trim();
+
+        if (c === CODIGO_CERTO && r === respostaAtiva) {
+            document.getElementById('busca').style.display = 'none';
+            document.getElementById('sucesso').style.display = 'block';
             
-            const agora = new Date().toLocaleString('pt-BR');
-            document.getElementById('audit-trail').innerText = `Consultado em: ${agora} | Localização: Carolina-MA.`;
+            const agora = new Date();
+            document.getElementById('data-hora').innerText = "Consultado em: " + agora.toLocaleString('pt-BR') + " | Localização: Carolina-MA";
         } else {
-            alert("Código de verificação ou resposta incorretos.");
+            alert("Código ou resposta de segurança incorretos!");
         }
     }
 </script>
+
 </body>
 </html>
