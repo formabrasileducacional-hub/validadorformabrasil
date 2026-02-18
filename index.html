@@ -22,9 +22,9 @@
 
         .card { 
             width: 100%;
-            max-width: 450px; 
+            max-width: 500px; 
             background: #fff; 
-            padding: 2rem; 
+            padding: 2.5rem; 
             border-radius: 12px; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
         }
@@ -64,7 +64,10 @@
             font-weight: 600; 
             width: 100%; 
             margin-top: 1rem;
+            transition: 0.3s;
         }
+
+        .btn:hover { background: #218838; }
 
         #sucesso { display: none; animation: fadeIn 0.5s ease; }
         
@@ -81,9 +84,89 @@
         .btn-down { 
             display: block; 
             background: var(--dark); 
-            color: white; 
+            color: white !important; 
             text-decoration: none; 
             padding: 14px; 
             text-align: center; 
             border-radius: 8px; 
-            margin-top: 1.5rem;
+            margin-top: 1.5rem; 
+            font-weight: 600; 
+        }
+
+        .footer { 
+            font-size: 0.7rem; 
+            color: #aaa; 
+            margin-top: 2rem; 
+            text-align: center; 
+            border-top: 1px solid #eee; 
+            padding-top: 10px; 
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div id="busca">
+        <h1>Validação de Documentos</h1>
+        
+        <div class="group">
+            <label>Código de Verificação:</label>
+            <input type="text" id="codigo" placeholder="Digite o código" maxlength="15">
+        </div>
+
+        <div class="group">
+            <label>Desafio: Qual a primeira letra de BRASIL?</label>
+            <input type="text" id="resposta" maxlength="1" placeholder="?">
+        </div>
+
+        <button class="btn" onclick="validarForm()">Validar Documento ➜</button>
+    </div>
+
+    <div id="sucesso">
+        <h2 style="color: var(--green); text-align: center;">✔ Documento Válido</h2>
+        
+        <div class="doc-box">
+            <strong>Código:</strong> <span id="res-codigo"></span><br>
+            <strong>Status:</strong> Autêntico / Registrado<br>
+            <strong>Descrição:</strong> Declaração de Conclusão (data de matrícula, conclusão e Aproveitamentos de Aulas Práticas)<br>
+            <strong>Curso:</strong> Habilitação Profissional Técnica de Nível Médio em Agropecuária<br>
+            <strong>RA:</strong> 22928/73144872 / <strong>Matrícula:</strong> 223603<br>
+            <strong>Aluno:</strong> João Vitor Carvalho Costa<br>
+            <strong>CPF:</strong> 078.***.***-26<br>
+            <strong>Data de expedição:</strong> 18/02/2026
+        </div>
+        
+        <a href="declaracao.pdf" download="DECLARACAO_JOAO_VITOR.pdf" class="btn-down">
+            📄 BAIXAR DECLARAÇÃO (PDF)
+        </a>
+        
+        <div class="footer" id="info-acesso"></div>
+    </div>
+</div>
+
+<script>
+    function validarForm() {
+        const c = document.getElementById('codigo').value.trim().toUpperCase();
+        const r = document.getElementById('resposta').value.trim().toUpperCase();
+
+        if (c === "RQ708BGJY2O2550" && r === "B") {
+            document.getElementById('busca').style.display = 'none';
+            document.getElementById('sucesso').style.display = 'block';
+            document.getElementById('res-codigo').innerText = c;
+            
+            const agora = new Date();
+            document.getElementById('info-acesso').innerText = 
+                "Validado em: " + agora.toLocaleString('pt-BR') + " | IP: Rastreado";
+        } else {
+            alert("Código ou desafio incorretos!");
+        }
+    }
+</script>
+
+</body>
+</html>
