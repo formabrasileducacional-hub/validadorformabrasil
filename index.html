@@ -51,4 +51,135 @@
             text-transform: uppercase;
         }
 
-        input:focus { border-color: var(--green); outline: none
+        input:focus { border-color: var(--green); outline: none; }
+
+        .btn { 
+            background: var(--green); 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            width: 100%; 
+            margin-top: 1rem;
+        }
+
+        #sucesso { display: none; animation: fadeIn 0.5s ease; }
+        
+        .doc-box { 
+            background: #f0fff4; 
+            padding: 20px; 
+            border-radius: 8px; 
+            border: 1px solid #c3e6cb; 
+            font-size: 0.9rem; 
+            line-height: 1.6; 
+        }
+
+        .btn-down { 
+            display: block; 
+            background: var(--dark); 
+            color: white; 
+            text-decoration: none; 
+            padding: 14px; 
+            text-align: center; 
+            border-radius: 8px; 
+            margin-top: 1.5rem; 
+            font-weight: 600; 
+            transition: background 0.3s;
+        }
+
+        .btn-down:hover { background: #000; }
+
+        .footer { 
+            font-size: 0.7rem; 
+            color: #aaa; 
+            margin-top: 2rem; 
+            text-align: center; 
+            border-top: 1px solid #eee; 
+            padding-top: 10px; 
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div id="busca">
+        <h1>Validação de Documentos</h1>
+        
+        <div class="group">
+            <label>Código de Verificação:</label>
+            <input type="text" id="codigo" placeholder="Digite o código" maxlength="15">
+        </div>
+
+        <div class="group">
+            <label>Desafio: Qual a primeira letra de BRASIL?</label>
+            <input type="text" id="resposta" maxlength="1" placeholder="?">
+        </div>
+
+        <button class="btn" onclick="validar()">Validar Documento ➜</button>
+    </div>
+
+    <div id="sucesso">
+        <h2 style="color: var(--green); text-align: center;">✔ Documento Válido</h2>
+        
+        <div class="doc-box">
+            <strong>Código:</strong> <span id="res-codigo"></span><br>
+            <strong>Status:</strong> Autêntico / Registrado<br>
+            <strong>Curso:</strong> Técnico em Agropecuária<br>
+            <strong>Aluno:</strong> JOÃO VITOR CARVALHO COSTA<br>
+            <strong>CPF:</strong> 078.***.***-26<br>
+            <strong>Data de Expedição:</strong> 18/02/2026
+        </div>
+        
+        <a href="declaracao.pdf" download="DECLARACAO_JOAO_VITOR.pdf" class="btn-down">
+            📄 BAIXAR DECLARAÇÃO (PDF)
+        </a>
+        
+        <div class="footer" id="info-acesso"></div>
+    </div>
+</div>
+
+<script>
+    const CONFIG = {
+        codigo_mestre: "RQ708BGJY2O2550",
+        resposta_correta: "B"
+    };
+
+    function validar() {
+        const cod = document.getElementById('codigo').value.trim().toUpperCase();
+        const res = document.getElementById('resposta').value.trim().toUpperCase();
+
+        if (cod === CONFIG.codigo_mestre && res === CONFIG.resposta_correta) {
+            exibirResultado(cod);
+        } else {
+            alert("Código ou resposta do desafio incorretos!");
+        }
+    }
+
+    function exibirResultado(codigoValido) {
+        document.getElementById('busca').style.display = 'none';
+        document.getElementById('sucesso').style.display = 'block';
+        document.getElementById('res-codigo').innerText = codigoValido;
+        
+        const agora = new Date();
+        document.getElementById('info-acesso').innerText = 
+            "Consultado em: " + agora.toLocaleString('pt-BR') + " | Localização: Carolina-MA";
+    }
+
+    // Permite validar ao apertar a tecla Enter
+    document.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            validar();
+        }
+    });
+</script>
+
+</body>
+</html>
