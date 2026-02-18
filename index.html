@@ -75,6 +75,7 @@
             border: 1px solid #c3e6cb; 
             font-size: 0.9rem; 
             line-height: 1.6; 
+            text-align: left;
         }
 
         .btn-down { 
@@ -130,56 +131,4 @@
         <h2 style="color: var(--green); text-align: center;">✔ Documento Válido</h2>
         
         <div class="doc-box">
-            <strong>Código:</strong> <span id="res-codigo"></span><br>
-            <strong>Status:</strong> Autêntico / Registrado<br>
-            <strong>Curso:</strong> Técnico em Agropecuária<br>
-            <strong>Aluno:</strong> JOÃO VITOR CARVALHO COSTA<br>
-            <strong>CPF:</strong> 078.***.***-26<br>
-            <strong>Data de Expedição:</strong> 18/02/2026
-        </div>
-        
-        <a href="declaracao.pdf" download="DECLARACAO_JOAO_VITOR.pdf" class="btn-down">
-            📄 BAIXAR DECLARAÇÃO (PDF)
-        </a>
-        
-        <div class="footer" id="info-acesso"></div>
-    </div>
-</div>
-
-<script>
-    const CONFIG = {
-        codigo_mestre: "RQ708BGJY2O2550",
-        resposta_correta: "B"
-    };
-
-    function validar() {
-        const cod = document.getElementById('codigo').value.trim().toUpperCase();
-        const res = document.getElementById('resposta').value.trim().toUpperCase();
-
-        if (cod === CONFIG.codigo_mestre && res === CONFIG.resposta_correta) {
-            exibirResultado(cod);
-        } else {
-            alert("Código ou resposta do desafio incorretos!");
-        }
-    }
-
-    function exibirResultado(codigoValido) {
-        document.getElementById('busca').style.display = 'none';
-        document.getElementById('sucesso').style.display = 'block';
-        document.getElementById('res-codigo').innerText = codigoValido;
-        
-        const agora = new Date();
-        document.getElementById('info-acesso').innerText = 
-            "Consultado em: " + agora.toLocaleString('pt-BR') + " | Localização: Carolina-MA";
-    }
-
-    // Permite validar ao apertar a tecla Enter
-    document.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            validar();
-        }
-    });
-</script>
-
-</body>
-</html>
+            <strong>Código de verificação:</strong> <span id="res-codigo"></span><br>
