@@ -14,12 +14,11 @@
         label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #555; }
         input { width: 100%; box-sizing: border-box; padding: 14px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; text-align: center; outline: none; }
         input:focus { border-color: var(--green); }
-        .btn { background: var(--green); color: white; border: none; padding: 16px; font-size: 16px; cursor: pointer; border-radius: 6px; font-weight: 600; width: 100%; margin-top: 10px; transition: 0.3s; }
-        .btn:hover { background: #358e4d; }
+        .btn { background: var(--green); color: white; border: none; padding: 16px; font-size: 16px; cursor: pointer; border-radius: 6px; font-weight: 600; width: 100%; margin-top: 10px; }
         #sucesso { display: none; text-align: left; }
         .doc-box { background: #e9f5e9; padding: 25px; border-radius: 8px; border: 1px solid #c3e6cb; font-size: 15px; line-height: 1.8; color: #2e502e; }
-        .btn-down { display: block; background: #333; color: white; text-decoration: none; padding: 16px; text-align: center; border-radius: 6px; margin-top: 20px; font-weight: 600; font-size: 16px; }
-        .footer { font-size: 12px; color: #888; margin-top: 25px; text-align: center; border-top: 1px solid #eee; padding-top: 15px; }
+        .btn-down { display: block; background: #333; color: white; text-decoration: none; padding: 16px; text-align: center; border-radius: 6px; margin-top: 20px; font-weight: 600; }
+        .footer { font-size: 11px; color: #888; margin-top: 25px; text-align: center; border-top: 1px solid #eee; padding-top: 15px; }
     </style>
 </head>
 <body>
@@ -30,12 +29,12 @@
         
         <div class="group">
             <label>Código de Verificação:</label>
-            <input type="text" id="codigo" placeholder="Ex: RQ708BGJY2O2550">
+            <input type="text" id="codigo" autocomplete="off">
         </div>
 
         <div class="group">
             <label id="pergunta">Qual a primeira letra de BRASIL?</label>
-            <input type="text" id="resposta" placeholder="">
+            <input type="text" id="resposta" autocomplete="off">
         </div>
 
         <button class="btn" onclick="validar()">Validar Documento ➜</button>
